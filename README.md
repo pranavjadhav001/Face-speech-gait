@@ -47,3 +47,27 @@ link:https://github.com/davidsandberg/facenet
 11. <img src="https://github.com/pranavjadhav001/Face-speech-gait/blob/master/screenshots/Capture11.PNG" width="400" height="400">
 12. <img src="https://github.com/pranavjadhav001/Face-speech-gait/blob/master/screenshots/Capture12.PNG" width="400" height="400">
 13. <img src="https://github.com/pranavjadhav001/Face-speech-gait/blob/master/screenshots/Capture13.PNG" width="400" height="400">
+##How to use
+1. git clone repositry
+2. make a folder named 'impstuff' and download facenet's pretrained model such that<br />
+```
+root folder  
+│
+└───impstuff
+│   │───shape_predictor_68_face_landmarks.dat
+│   │───inception model
+            └───20170512-110547
+                    └───20170512-110547.pb
+```
+3. download openpose zip file and unzip , go to models and double click on getmodels.sh and make 3 folders in it, i.e. trimmed_videos, output and json_output
+```
+root folder  
+│
+└───openpose
+│   │───trimmed_videos
+│   │───bin
+    │       └───OpenPoseDemo.exe
+    │───json_output
+    │───output
+```
+4. Run shield.py 
