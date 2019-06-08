@@ -1,0 +1,864 @@
+#: import WipeTransition kivy.uix.screenmanager.WipeTransition
+# File name:shield.py
+
+Manager:
+    transition: WipeTransition(duration=2)
+    First:
+    Second:
+    User:
+        id:u
+    Third:
+    Portal:
+        id:p
+    Fourth:
+    Fifth:
+        info:u.userid
+    Tier1:
+    Tier2:
+    Tier3:
+    Select:
+        id:s
+    Step1:
+        user_name: p.current_user
+    Step3:
+        f:s.file
+        user_name: p.current_user
+    Step2:
+        f:s2.audio
+        user_name: p.current_user
+    Select_2:
+		user_name: p.current_user
+        id:s2
+    Webcam_Profile:
+        user_name:u.userid
+    Sixth:
+        user:u.userid
+        
+    Select3:
+        user:u.userid
+    Training:
+    Face_Training:
+    Gait_Training:
+    Speech_Training:
+    Delete:
+    Done:
+    
+<First>:
+    name:'first'
+    BoxLayout:
+        padding:10
+        spacing:10
+        orientation: 'vertical'
+        Label:
+            text: 'SHIELD SECURITY'
+            font_size:70
+            size_hint: 0.5,None
+            height:"85dp"
+            pos_hint:{'center_x':0.5}
+        Label:
+            text: '3-Level Tier'
+            font_size:50
+            pos_hint:{'center_x':0.5}
+        Image:
+            source:'app_images/logo.jpg'
+            allow_stretch: True
+            size_hint:2.5,2.5
+            pos_hint:{'center_x':0.5}
+        BoxLayout:
+            padding:100
+            spacing:30
+            Button:
+                text:'ENTER'
+                font_size:25
+                size_hint: 0.5, None
+                height:"85dp"
+                pos_hint:{'y':0.8}
+                on_press: app.root.current='second'
+                
+            Button:
+                text:'EXIT'
+                font_size:25
+                size_hint: 0.5,None
+                height:"85dp"
+                pos_hint:{'y':0.8}
+                on_press: root.done()
+        Label:
+            text:'WELCOME'
+            font_size:50
+            pos_hint:{'center_x':0.5}
+
+<Second>:
+    name:'second'
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Button:
+            text:'Initiate Authorization'
+            font_size:25
+            size_hint: 0.5, 0.8
+            pos_hint:{'center_x':0.5}
+            on_press: app.root.current='portal'
+        
+        Button:
+            text:'Add Profile'
+            font_size:25
+            size_hint: 0.5, 0.8
+            pos_hint:{'center_x':0.5}
+            on_press: app.root.current='user'
+
+        Button:
+            text:'Delete Profile'
+            font_size:25
+            size_hint: 0.5, 0.8
+            pos_hint:{'center_x':0.5}
+            on_press: app.root.current='delete'
+                
+        Button:
+            text:'Back'
+            font_size:25
+            size_hint: 0.5,0.8
+            pos_hint:{'center_x':0.5}
+            on_press: app.root.current='first'
+<Delete>:
+    name:'delete'
+    user_name:uname
+    on_leave:root.text()
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Label:
+            text:'Name'
+            font_size:50
+            size_hint: 0.2, 0.3
+            pos_hint:{'center_x':0.5}
+        TextInput:
+            id: uname
+            multiline:False
+            size_hint_y:None
+            size_hint_x: 0.6
+            height:'50'
+            pos_hint:{'center_x':0.5}
+
+        Label:
+            text:root.validity
+            font_size:20
+            size_hint: 0.2, 0.3
+            pos_hint:{'center_x':0.5}
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 10
+            spacing: 50
+            Button:
+                text:'Delete'
+                font_size:25
+                size_hint: 0.5, None
+                height:'85dp'
+                pos_hint:{'center_x':0.5}
+                on_press:root.compare(uname.text)
+            Button:
+                text:'Back'
+                font_size:25
+                size_hint: 0.5, None
+                height:'85dp'
+                pos_hint:{'center_x':0.5}
+                on_press:app.root.current='second'
+        
+            
+<User>:
+    on_leave:root.text()
+    name:'user'
+    name_input:name
+    pin_input:pin
+    BoxLayout:
+        orientation: 'vertical'
+        padding:20
+        spacing:10
+        BoxLayout:
+            padding:20
+            spacing:10
+            Label:
+                text:'User Name'
+                font_size:25
+                size_hint_x:None
+                width:'200'
+                
+            TextInput:
+                id:name
+                multiline:False
+                size_hint_y:None
+                size_hint_x:0.15
+                height:'50'
+                pos_hint:{'y':0.35}
+                
+        BoxLayout:
+            padding:20
+            spacing:10
+            Label:
+                text:'Passcode'
+                font_size:25
+                size_hint_x:None
+                width:'200'
+                
+            TextInput:
+                id: pin
+                multiline:False
+                password: True
+                size_hint_y:None
+                size_hint_x:0.15
+                height:'50'
+                
+                pos_hint:{'y':0.35}
+
+        Label:
+            text:root.check
+            font_size:20
+            size_hint: 0.2, 0.3
+            pos_hint:{'center_x':0.5}
+            
+        Button:
+            text:'Submit Profile'
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+            on_press:root.profile(name.text,pin.text)
+            
+
+        Button:
+            text:'Back'
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+            on_press:app.root.current='first'
+            
+
+<Portal>:
+    name: 'portal'
+    user_name:uname
+    user_pin:ucode
+    on_leave:root.text()
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Label:
+            text:'Name'
+            font_size:50
+            size_hint: 0.2, 0.3
+            pos_hint:{'center_x':0.5}
+        TextInput:
+            id: uname
+            multiline:False
+            size_hint_y:None
+            size_hint_x: 0.6
+            height:'50'
+            pos_hint:{'center_x':0.5}
+        Label:
+            text:'Passcode'
+            font_size:50
+            size_hint: 0.2, 0.3
+            pos_hint:{'center_x':0.5}
+        TextInput:
+            id: ucode
+            multiline:False
+            password: True
+            size_hint_y:None
+            size_hint_x: 0.6
+            height:'50'
+            pos_hint:{'center_x':0.5}
+        Label:
+            text:root.validity
+            font_size:20
+            size_hint: 0.2, 0.3
+            pos_hint:{'center_x':0.5}
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 10
+            spacing: 50
+            Button:
+                text:'Submit'
+                font_size:25
+                size_hint: 0.5, None
+                height:'85dp'
+                pos_hint:{'center_x':0.5}
+                on_press:root.compare(uname.text,ucode.text)
+            Button:
+                text:'Back'
+                font_size:25
+                size_hint: 0.5, None
+                height:'85dp'
+                pos_hint:{'center_x':0.5}
+                on_press:app.root.current='first'
+            
+<Tier1>:
+    name: 'tier1'
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Label:
+            text:'Step-I:Face Analysis'
+            font_size:70
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+        Image:
+            source:'app_images/facee.jpg'
+            allow_stretch: True
+            size_hint:2.5,2.5
+            pos_hint:{'center_x':0.5}
+        Label:
+            text:'Press Start'
+            font_size:45
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+        
+        Button:
+            text:'Start'
+            font_size:25
+            size_hint: 0.5, 0.8
+            pos_hint:{'center_x':0.5}
+            on_press: app.root.current='face'
+
+<Tier2>:
+    name: 'tier2'
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Label:
+            text:'Step-II:Speech Analysis'
+            font_size:70
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+        Image:
+            source:'app_images/speech.jpg'
+            allow_stretch: True
+            size_hint:2.5,2.5
+            pos_hint:{'center_x':0.5}
+        Label:
+            text:'Press Start'
+            font_size:45
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+        
+        Button:
+            text:'Start'
+            font_size:25
+            size_hint: 0.5, 0.8
+            pos_hint:{'center_x':0.5}
+            on_press: app.root.current='select2'
+            
+
+<Tier3>:
+    name: 'tier3'
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Label:
+            text:'Step-III:Gait Analysis'
+            font_size:70
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+        Image:
+            source:'app_images/gait.png'
+            allow_stretch: True
+            size_hint:2.5,2.5
+            pos_hint:{'center_x':0.5}
+        Label:
+            text:'Press Start'
+            font_size:45
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+        
+        Button:
+            text:'Start'
+            font_size:25
+            size_hint: 0.5, 0.8
+            pos_hint:{'center_x':0.5}
+            on_press: app.root.current='select'
+            
+<Webcam_Profile>:
+    name: 'profile'
+    on_enter: root.training_frame()
+    on_leave: root.text()
+    BoxLayout:
+        orientation: 'vertical'
+        padding:20
+        spacing:20
+        Label:
+           
+            text:root.label
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+        Label:
+            text:root.count
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+        Image:
+            source:'app_images/webcam.jpg'
+            allow_stretch:True
+            size_hint:1.5,1.5
+            pos_hint:{'center_x':0.5}
+            
+<Select>:
+    name: 'select'
+    l1:l1
+    on_leave:root.text()
+    BoxLayout:
+        orientation: 'vertical'
+        FileChooserIconView:
+            size_hint:1.0,1.0
+            on_selection: root.done(*args)
+  
+        BoxLayout:
+            orientation:'vertical'
+            padding:20
+            spacing:20
+            Label:
+                id:l1
+                text:root.t
+                font_size:25
+                size_hint: 0.5, 0.5
+                pos_hint:{'center_x':0.5}
+            BoxLayout:
+                padding:10
+                spacing:50
+                    
+                Button:
+                    text:"Next"
+                    font_size:25
+                    size_hint: 0.2, 0.5
+                    
+                    pos_hint:{'center_x':0.5,'center_y':0.3}
+                    on_press: root.filecheck()
+                Button:
+                    text:"Back"
+                    font_size:25
+                    size_hint: 0.2, 0.5
+                    
+                    pos_hint:{'center_x':0.5,'center_y':0.3}
+                    on_press: app.root.current='tier3'
+
+<Select_2>:
+    name: 'select2'
+    on_enter:root.text()
+    wat:wat
+	BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Button:
+            text:'Record'
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+            on_press:root.record()
+
+        Label:
+            id:wat
+            text:root.time
+            font_size:50
+
+        Button:
+            text:"Back"
+            font_size:25
+            size_hint: 0.3, 0.3
+			pos_hint:{'center_x':0.5,'center_y':0.3}
+			on_press: app.root.current='tier2'
+
+
+
+<Done>:
+    name:'done'
+        
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Image:
+            source: 'app_images/check2.png'
+            allow_stretch: True
+           
+<Step1>:
+    name:'face'
+    ty2:ty2
+    on_enter:root.s()
+        
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Image:
+            source: 'app_images/wait.gif'
+            allow_stretch: True
+        Label:
+            id:ty2
+            text: root.txt2
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+
+
+<Step2>:
+    
+    name:'speech'
+    ty2:ty2
+    on_enter:
+        root.s()
+        root.text()
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Image:
+            source: 'app_images/wait.gif'
+            allow_stretch: True
+        Label:
+            id:ty2
+            text: root.txt2
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+            
+<Step3>:
+    name:'gait'
+    ty:ty
+    
+    on_enter:
+        root.g()
+        root.text()
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Image:
+            source: 'app_images/wait.gif'
+            allow_stretch: True
+        Label:
+            id:ty
+            text:root.txt1
+   
+<Third>:
+    name:'third'
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        BoxLayout:
+            padding: 50
+            spacing: 50
+            
+            Button:
+                text:'Facial Data'
+                font_size:25
+                size_hint: 0.8, 0.8
+                pos_hint:{'center_x':0.5}
+                on_press: app.root.current='fourth'
+        
+        
+            Button:
+                text:'Speech Data'
+                font_size:25
+                size_hint: 0.8, 0.8
+                pos_hint:{'center_x':0.5}
+                on_press: app.root.current='fifth'
+
+            Button:
+                text:'Gait Data'
+                font_size:25
+                size_hint: 0.8, 0.8
+                pos_hint:{'center_x':0.5}
+                on_press: app.root.current='sixth'
+                
+        Button:
+            text:'Initiate Training'
+            font_size:25
+            size_hint: 0.5,0.4
+            pos_hint:{'center_x':0.5}
+            on_press: app.root.current='training'    
+        Button:
+            text:'Back'
+            font_size:25
+            size_hint: 0.5,0.4
+            pos_hint:{'center_x':0.5}
+            on_press: app.root.current='second'
+        
+    
+
+<Fourth>:
+    name:'fourth'
+    BoxLayout:
+        orientation: 'vertical'
+        padding:100
+
+        spacing:30
+        BoxLayout:
+            padding:100
+            spacing:30
+            Button:
+                text:'Web Cam'
+                font_size:25
+                size_hint: 0.5, None
+                height:"85dp"
+                pos_hint:{'y':0.2}
+                on_press: app.root.current='profile'
+                
+                
+            Button:
+                text:'Video'
+                font_size:25
+                size_hint: 0.5,None
+                height:"85dp"
+                pos_hint:{'y':0.2}
+                on_press: app.root.current='select3'
+                
+        Button:
+            text:'Back'
+            font_size:30
+            size_hint: 0.5,None
+            height:'85dp'
+            pos_hint:{'center_x':0.5}
+            on_press:app.root.current='third'
+    
+<Select3>:
+    
+    name: 'select3'
+    on_leave:root.text()
+    l1:l1
+    BoxLayout:
+        orientation: 'vertical'
+        FileChooserIconView:
+            size_hint:1.0,1.0
+            on_selection: root.done(*args)
+        BoxLayout:
+            orientation:'vertical'
+            padding:20
+            spacing:20
+            Label:
+                id:l1
+                text:root.t
+                font_size:25
+                size_hint: 0.5, 0.5
+                pos_hint:{'center_x':0.5}
+            BoxLayout:
+                padding:10
+                spacing:50
+                    
+                Button:
+                    text:"Next"
+                    font_size:25
+                    size_hint: 0.2, 0.5
+                    
+                    pos_hint:{'center_x':0.5,'center_y':0.3}
+                    on_press: root.filecheck()
+                Button:
+                    text:"Back"
+                    font_size:25
+                    size_hint: 0.2, 0.5
+                    
+                    pos_hint:{'center_x':0.5,'center_y':0.3}
+                    on_press: app.root.current='third'
+
+<Fifth>:
+	watch:watch
+    wat:wat
+    name:'fifth'
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Button:
+            text:'Record'
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+            on_press:root.record(root.info)
+        Label:
+            id:watch
+            text: root.time
+            font_size:50
+        Label:
+            id:wat
+            text: ''
+            font_size:50
+        Button:
+            text:"Back"
+            font_size:25
+            size_hint: 0.2, 0.5
+                    
+            pos_hint:{'center_x':0.5,'center_y':0.3}
+            on_press: app.root.current='third'
+            
+
+<Sixth>:
+    name:'sixth'
+    on_enter:root.text()
+    BoxLayout:
+        orientation: 'vertical'
+        FileChooserIconView:
+            size_hint:1.0,1.0
+            on_selection: root.done(*args)
+        BoxLayout:
+            orientation:'vertical'
+            padding:20
+            spacing:20
+            Label:
+                id:l1
+                text:root.t
+                font_size:25
+                size_hint: 0.5, 0.5
+                pos_hint:{'center_x':0.5}
+            BoxLayout:
+                padding:10
+                spacing:50
+                    
+                Button:
+                    text:"Next"
+                    font_size:25
+                    size_hint: 0.2, 0.5
+                    
+                    pos_hint:{'center_x':0.5,'center_y':0.3}
+                    on_press: root.filecheck()
+                Button:
+                    text:"Back"
+                    font_size:25
+                    size_hint: 0.2, 0.5
+                    
+                    pos_hint:{'center_x':0.5,'center_y':0.3}
+                    on_press: app.root.current='third'
+
+    
+<Training>:
+    name:'training'
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        BoxLayout:
+            padding:20
+            spacing: 20
+            Button:
+                text:'Face Training'
+                font_size:25
+                size_hint: 1.5,1.5
+                pos_hint:{'center_x':0.5}
+                on_press:app.root.current='face_train'
+            Button:
+                text:'Speech Training'
+                font_size:25
+                size_hint: 1.5,1.5
+                pos_hint:{'center_x':0.5}
+                on_press:app.root.current='speech_train'
+            Button:
+                text:'Gait Training'
+                font_size:25
+                size_hint: 1.5,1.5
+                pos_hint:{'center_x':0.5}
+                on_press:app.root.current='gait_train'
+        Image:
+            source: 'app_images/Training.jpg'
+            allow_stretch: True
+            size_hint: 1.5,1.5
+            pos_hint:{'center_x':0.5}
+        Button:
+            text:'Back'
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+            on_press:app.root.current='third'
+        
+<Face_Training>:
+    name: 'face_train'
+    on_enter:
+        root.train()
+        root.text()
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Image:
+            source:'app_images/face_train.png'
+            allow_stretch: True
+            size_hint:2.5,2.5
+            pos_hint:{'center_x':0.5}
+        Label:
+            text: root.label
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+        Button:
+            text:'Cancel'
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+            on_press:root.cancel()
+
+<Speech_Training>:
+    name: 'speech_train'
+    on_enter:
+        root.train()
+        root.text()
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Image:
+            source:'app_images/speech_train.jpg'
+            allow_stretch: True
+            size_hint:2.5,2.5
+            pos_hint:{'center_x':0.5}
+        Label:
+            text: root.label
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+        Button:
+            text:'Cancel'
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+            on_press:root.cancel()
+
+<Gait_Training>:
+    name: 'gait_train'
+    on_enter:
+        root.train()
+        root.text()
+    BoxLayout:
+        padding: 50
+        spacing: 50
+        orientation: 'vertical'
+        Image:
+            source:'app_images/gait_train.jpg'
+            allow_stretch: True
+            size_hint:2.5,2.5
+            pos_hint:{'center_x':0.5}
+        Label:
+            text: root.label
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+        Button:
+            text:'Cancel'
+            font_size:25
+            size_hint: 0.5, 0.5
+            pos_hint:{'center_x':0.5}
+            on_press:root.cancel()
+
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
