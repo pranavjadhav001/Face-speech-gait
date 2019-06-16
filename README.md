@@ -47,7 +47,7 @@ link:https://github.com/davidsandberg/facenet
 11. <img src="https://github.com/pranavjadhav001/Face-speech-gait/blob/master/screenshots/Capture11.PNG" width="400" height="400">
 12. <img src="https://github.com/pranavjadhav001/Face-speech-gait/blob/master/screenshots/Capture12.PNG" width="400" height="400">
 13. <img src="https://github.com/pranavjadhav001/Face-speech-gait/blob/master/screenshots/Capture13.PNG" width="400" height="400">
-##How to use
+## How to use
 1. git clone repositry
 2. make a folder named 'impstuff' and download facenet's pretrained model such that<br />
 ```
